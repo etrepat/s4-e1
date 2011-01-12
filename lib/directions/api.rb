@@ -8,8 +8,8 @@ module Directions
 
     format :json
 
-    def self.request(options)
-      get('/json', :query => options)
+    def self.request(params)
+      get('/json', :query => params)
     end
   end
 end
