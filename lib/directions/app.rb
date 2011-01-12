@@ -30,21 +30,11 @@ module Directions
     def parsed_options?
       @options_parser ||= OptionParser.new do |opts|
         opts.banner = <<BANNER
-RMU S4E1: Google Directions API - CLI
-by Estanislau Trepat
-
 Usage:
   directions -o [ORIGIN] -d [DESTINATION] [options]
 
-Examples:
-
-  directions -o ""
-  directions -o Toledo -d Madrid -r es
-
 Options are:
 BANNER
-
-        opts.separator ''
 
         opts.on('-o', '--origin=LOCATION', String,
           'Origin location (required)') do |orig|
@@ -60,17 +50,17 @@ BANNER
 
         opts.on('-m', '--mode=MODE', String, [:driving, :walking, :bicycling],
           'Travel mode (driving, walking, bicycling)') do |mode|
-          @options[:mode] = mode.strip
+          @options[:mode] = mode.to_s.strip
         end
 
         opts.on('-a', '--avoid=VALUE', String, [:tolls, :highways],
           'Features to avoid (tolls, highways)') do |avoid|
-          @options[:avoid] = avoid.strip
+          @options[:avoid] = avoid.to_s.strip
         end
 
         opts.on('-u', '--units=SYSTEM', String, [:metric, :imperial],
           'Force unit system for output (metric, imperial)') do |units|
-          @options[:units] = units.strip
+          @options[:units] = units.to_s.strip
         end
 
         opts.on('-r', '--region=REGION', String,
@@ -94,7 +84,13 @@ BANNER
 
         opts.separator ''
       end
-      @options_parser.parse!(@arguments) rescue return nil
+      
+      begin
+        @options_parser.parse!(@arguments)
+      rescue OptionParser::ParseError => e
+        @options_parser.warn e.message
+        nil
+      end
     end
 
     # check if mandatory arguments are present
@@ -108,4 +104,3 @@ BANNER
     end
   end
 end
-
