@@ -3,5 +3,4 @@
 $:.unshift File.dirname(__FILE__) + '/../lib'
 require 'directions'
 
-Directions.get(ARGV)
-
+Directions::App.new(ARGV).run
