@@ -10,7 +10,7 @@ module Directions
     # for rapid printing
     def to_s
       return text unless text.strip.empty?
-      return value if value.to_i != 0
+      return value.to_s if value.to_i != 0
       'unknown'
     end
 
@@ -20,6 +20,23 @@ module Directions
     def inspect
       inspect_id = "%x" % (object_id * 2)
       %(#<#{self.class}:0x#{inspect_id} @value=#{value.inspect}, @text=#{text.inspect}>)
+    end
+    
+    # this way we should be able to compare measures
+    def eql?(measure)
+      self.class.equal?(measure) && @value == measure.value
+    end
+    
+    include Comparable
+    
+    def <=>(measure)
+      raise TypeError, 'Incompatible types!' unless self.class.equal?(measure)
+      value <=> measure.value
+    end
+    
+    def +(measure)
+      raise TypeError, 'Incompatible types!' unless self.class.equal?(measure)
+      # TODO: add functionality
     end
   end
 
