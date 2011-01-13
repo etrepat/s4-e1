@@ -8,8 +8,14 @@ module Directions
 
     format :json
 
-    def self.request(params)
-      get('/json', :query => params)
+    def initalize(query_params)
+      @query_params = query_params
+    end
+
+    attr_reader :query_params
+
+    def get
+      self.class.get('/json', :query => query_params) rescue nil
     end
   end
 end
