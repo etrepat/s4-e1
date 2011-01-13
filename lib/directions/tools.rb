@@ -24,7 +24,7 @@ module Directions
           parse_element(element)
         end
 
-        return @output
+        return @output.strip
       end
 
       protected
