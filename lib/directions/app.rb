@@ -11,7 +11,7 @@ module Directions
       if parsed_options? && options_valid?
         begin
           tour_guide.ask_directions
-          tour_guide.main_route.describe
+          puts tour_guide.main_route.describe
         rescue Directions::ParsingError => e
           puts "ERROR: A parsing error occurred. Bad response."
         rescue Directions::InvalidRequestError => e
@@ -28,8 +28,8 @@ module Directions
           puts "ERROR: Too many requests."
         rescue Directions::Error => e
           puts "Unknown error. #{e}"
-        #rescue Exception => e
-        #  puts e.message
+        rescue Exception => e
+          puts "An unexpected excetion ocurred!\n#{e.message}"
         end
       else
         output_usage

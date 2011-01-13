@@ -20,7 +20,7 @@ module Directions
 
       legs.each { |leg| output << "\n#{leg.describe}" }
 
-      puts output
+      output
     end
 
     def self.build_from_api_data(data)
