@@ -24,7 +24,6 @@ module Directions
     end
 
     def self.build_from_api_data(data)
-      pp data
       route = Directions::Route.new(:summary => data['summary'])
       data['legs'].each do |leg|
         route.legs << Directions::Leg.build_from_api_data(leg)
