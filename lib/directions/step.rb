@@ -5,34 +5,37 @@ module Directions
 
     def initialize(attribs={})
       attribs.each do |k, v|
-        m = "#{key}=".to_sym
-        self.send(m, value) if self.respond_to?(m)
+        m = "#{k}=".to_sym
+        self.send(m, v) if self.respond_to?(m)
       end
 
-      instructions    ||= ''
-      distance        ||= Distance.new
-      duration        ||= Duration.new
-      start_location  ||= Location.new
-      end_location    ||= Location.new
+      @instructions    ||= ''
+      @distance        ||= Directions::Distance.new
+      @duration        ||= Directions::Duration.new
+      @start_location  ||= Directions::Location.new
+      @end_location    ||= Directions::Location.new
     end
 
     def self.build_from_api_data(data)
       attribs = {}
-      attribs[:instructions] = self.clean_instructions_markup(data['html_instructions')
-      attribs[:distance] = Distance.new(
-        data['distance']['value'], data['distance']['text']
+      attribs[:instructions]    = self.clean_instructions_markup(data['html_instructions'])
+      attribs[:start_location]  = data['start_location']
+      attribs[:end_location]    = data['end_location']
+
+      attribs[:distance]        = Directions::Distance.new(
+        data['distance']['value'].to_i, data['distance']['text']
       ) if data['distance']
-      attribs[:duration] = Duration.new(
-        data['duration']['value'], data['duration']['text']
+
+      attribs[:duration]        = Directions::Duration.new(
+        data['duration']['value'].to_i, data['duration']['text']
       ) if data['duration']
-      attribs[:start_location] = data['start_location']
-      attribs[:end_location] = data['end_location']
 
       return Directions::Step.new(attribs)
     end
 
     def self.clean_instructions_markup(html_instructions)
-      html_instructions
+      html = html_instructions.strip.chomp
+      return Directions::Tools::HtmlToAnsi.convert(html)
     end
   end
 end
