@@ -18,6 +18,13 @@ module Directions
       @end_address     ||= ''
     end
 
+    def describe
+      output = "#{start_address}"
+      steps.each_with_index { |s,idx| output << "\n#{(idx+1).to_s}. #{s.describe}" }
+      output << "\n---\n#{distance.text} - #{duration.text}\n#{end_address}"
+      output
+    end
+
     def self.build_from_api_data(data)
       attribs = {}
       attribs[:start_location]  = data['start_location']

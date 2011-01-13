@@ -9,18 +9,35 @@ module Directions
 
     def run
       if parsed_options? && options_valid?
-
-        # ...
-        r = Directions::Api.request( options )
-
-        steps = r['routes'][0]['legs'][0]['steps']
-        steps.each_with_index do |step, index|
-          puts "#{index+1}. #{step['html_instructions'].gsub(/<\/?[^>]*>/, '')}"
+        begin
+          tour_guide.ask_directions
+          tour_guide.main_route.describe
+        rescue Directions::ParsingError => e
+          puts "ERROR: A parsing error occurred. Bad response."
+        rescue Directions::InvalidRequestError => e
+          puts "ERROR: Invalid request."
+        rescue Directions::RequestDenied => e
+          puts "ERROR: Request denied."
+        rescue Directions::LocationNotFoundError => e
+          puts "ERROR: Some of the locations could not be geocoded."
+        rescue Directions::ZeroResultsError => e
+          puts "ERROR: No route could be found between origin and destination."
+        rescue Directions::WaypointsExceededError => e
+          puts "ERROR: Too many waypoints."
+        rescue Directions::QueryLimitError => e
+          puts "ERROR: Too many requests."
+        rescue Directions::Error => e
+          puts "Unknown error. #{e}"
+        #rescue Exception => e
+        #  puts e.message
         end
-
       else
         output_usage
       end
+    end
+
+    def tour_guide
+      @tour_guide ||= Directions::TourGuide.new(options)
     end
 
     protected
@@ -84,7 +101,7 @@ BANNER
 
         opts.separator ''
       end
-      
+
       begin
         @options_parser.parse!(@arguments)
       rescue OptionParser::ParseError => e
@@ -104,3 +121,4 @@ BANNER
     end
   end
 end
+

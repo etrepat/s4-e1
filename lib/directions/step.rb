@@ -16,6 +16,10 @@ module Directions
       @end_location    ||= Directions::Location.new
     end
 
+    def describe
+      "(#{distance.text}) #{instructions}"
+    end
+
     def self.build_from_api_data(data)
       attribs = {}
       attribs[:instructions]    = self.clean_instructions_markup(data['html_instructions'])
