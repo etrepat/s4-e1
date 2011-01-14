@@ -21,23 +21,24 @@ module Directions
       inspect_id = "%x" % (object_id * 2)
       %(#<#{self.class}:0x#{inspect_id} @value=#{value.inspect}, @text=#{text.inspect}>)
     end
-    
+
     # this way we should be able to compare measures
     def eql?(measure)
-      self.class.equal?(measure) && @value == measure.value
+      self.class.equal?(measure.class) && @value == measure.value
     end
-    
+
     include Comparable
-    
+
     def <=>(measure)
-      raise TypeError, 'Incompatible types!' unless self.class.equal?(measure)
+      raise TypeError, 'Incompatible types!' unless self.class.equal?(measure.class)
       value <=> measure.value
     end
-    
-    def +(measure)
-      raise TypeError, 'Incompatible types!' unless self.class.equal?(measure)
-      # TODO: add functionality
-    end
+
+    # TODO: should add operators for measures but I don't know how to automatically
+    # re-localize measures text strings as they are returned by the Directions API
+    #def +(measure)
+    #  raise TypeError, 'Incompatible types!' unless self.class.equal?(measure.class)
+    #end
   end
 
   # values from duration are expressed in seconds
