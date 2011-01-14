@@ -13,6 +13,9 @@ module Directions
     end
 
     # TODO: calculate total route distance as the sum of all of its legs
+    def distance
+      legs.last.distance unless legs.empty?
+    end
 
     def describe
       output = "Route: #{summary}"
