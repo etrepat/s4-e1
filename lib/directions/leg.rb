@@ -21,7 +21,7 @@ module Directions
     def describe
       output = "#{start_address}"
       steps.each_with_index { |s,idx| output << "\n#{(idx+1).to_s}. #{s.describe}" }
-      output << "\n---\n#{distance.text} - #{duration.text}\n#{end_address}"
+      output << "\n---\n#{distance} - #{duration}\n#{end_address}"
       output
     end
 

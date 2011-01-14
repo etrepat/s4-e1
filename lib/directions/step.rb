@@ -17,7 +17,7 @@ module Directions
     end
 
     def describe
-      "(#{distance.text}) #{instructions}"
+      "(#{distance}) #{instructions}"
     end
 
     def self.build_from_api_data(data)
