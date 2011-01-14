@@ -25,13 +25,13 @@ module Directions
 
     def build_query_params
       query_params = {}
-      query_params[:origin] = options[:origin]
-      query_params[:destination] = options[:destination]
-      query_params[:mode] = options[:mode] if options[:mode]
-      query_params[:avoid] = options[:avoid] if options[:avoid]
-      query_params[:units] = options[:units] if options[:units]
-      query_params[:region] = options[:region] if options[:region]
-      query_params[:language] = options[:language] if options[:language]
+      query_params[:origin]       = options[:origin]
+      query_params[:destination]  = options[:destination]
+      query_params[:mode]         = options[:mode]      if options[:mode]
+      query_params[:avoid]        = options[:avoid]     if options[:avoid]
+      query_params[:units]        = options[:units]     if options[:units]
+      query_params[:region]       = options[:region]    if options[:region]
+      query_params[:language]     = options[:language]  if options[:language]
 
       query_params
     end
@@ -44,13 +44,13 @@ module Directions
       return true if status == 'OK'
 
       case status
-        when 'NOT_FOUND'; raise Directions::LocationNotFoundError
-        when 'ZERO_RESULTS'; raise Directions::ZeroResultsError
-        when 'MAX_WAYPOINTS_EXCEEDED'; raise Directions::WaypointsExceededError
-        when 'INVALID_REQUEST'; raise Directions::InvalidRequestError
-        when 'OVER_QUERY_LIMIT'; raise Directions::QueryLimitError
-        when 'REQUEST_DENIED'; raise Directions::RequestDenied
-        else raise Directions::UnknownError
+        when 'NOT_FOUND';               raise Directions::LocationNotFoundError
+        when 'ZERO_RESULTS';            raise Directions::ZeroResultsError
+        when 'MAX_WAYPOINTS_EXCEEDED';  raise Directions::WaypointsExceededError
+        when 'INVALID_REQUEST';         raise Directions::InvalidRequestError
+        when 'OVER_QUERY_LIMIT';        raise Directions::QueryLimitError
+        when 'REQUEST_DENIED';          raise Directions::RequestDenied
+        else                            raise Directions::UnknownError
       end
     end
 
