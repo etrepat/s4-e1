@@ -1,5 +1,3 @@
-require 'rexml/document'
-
 module Directions
   module Tools
     class HtmlToAnsi
