@@ -29,7 +29,7 @@ module Directions
       query_params[:destination] = options[:destination]
       query_params[:mode] = options[:mode] if options[:mode]
       query_params[:avoid] = options[:avoid] if options[:avoid]
-      query_params[:units] = options[:units] if options[:avoid]
+      query_params[:units] = options[:units] if options[:units]
       query_params[:region] = options[:region] if options[:region]
       query_params[:language] = options[:language] if options[:language]
 
