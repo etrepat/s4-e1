@@ -14,12 +14,20 @@ module Directions
 
     # TODO: calculate total route distance as the sum of all of its legs
     def distance
-      legs.last.distance unless legs.empty?
+      return legs.last.distance unless legs.empty?
+      Directions::Distance.new
+    end
+
+    # TODO: calculate total duration as the sum of all of its legs
+    def duration
+      return legs.last.duration unless legs.empty?
+      Directions::Duration.new
     end
 
     def describe
       output = "Route: #{summary}"
-      output << "\nFrom: #{legs.first.start_address}, to: #{legs.last.end_address}\n"
+      output << "\nFrom: #{legs.first.start_address}, to: #{legs.last.end_address}"
+      output << "\n#{distance} - #{duration}\n"
 
       legs.each { |leg| output << "\n#{leg.describe}" }
 
