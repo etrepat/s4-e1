@@ -11,7 +11,7 @@ module Directions
       @end_location   = attribs.fetch(:end_location, Directions::Location.new)
     end
 
-    def describe
+    def to_s
       "(#{distance}) #{instructions}"
     end
 

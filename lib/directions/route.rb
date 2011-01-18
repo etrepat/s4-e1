@@ -19,12 +19,12 @@ module Directions
       Directions::Duration.new
     end
 
-    def describe
+    def to_s
       output = "Route: #{summary}"
       output << "\nFrom: #{legs.first.start_address}, to: #{legs.last.end_address}"
-      output << "\n#{distance} - #{duration}\n"
+      output << "\n#{distance} - #{duration}"
 
-      legs.each { |leg| output << "\n#{leg.describe}" }
+      legs.each { |leg| output << "\n#{leg}" }
 
       output
     end

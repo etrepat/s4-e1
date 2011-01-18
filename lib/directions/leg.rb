@@ -11,9 +11,9 @@ module Directions
       @end_location   = attribs.fetch(:end_location, Directions::Location.new)
     end
 
-    def describe
+    def to_s
       output = "#{start_address}"
-      steps.each_with_index { |s,idx| output << "\n#{(idx+1).to_s}. #{s.describe}" }
+      steps.each_with_index { |s,idx| output << "\n#{(idx+1).to_s}. #{s}" }
       output << "\n---\n#{distance} - #{duration}\n#{end_address}"
       output
     end
