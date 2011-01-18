@@ -14,7 +14,7 @@ end
 require 'directions/tools.rb'
 require 'directions/error.rb'
 require 'directions/location.rb'
-require 'directions/measures.rb'
+require 'directions/measure.rb'
 require 'directions/step.rb'
 require 'directions/leg.rb'
 require 'directions/route.rb'
