@@ -3,13 +3,8 @@ module Directions
     attr_accessor :summary, :legs
 
     def initialize(attribs={})
-      attribs.each do |k, v|
-        m = "#{k}=".to_sym
-        self.send(m, v) if self.respond_to?(m)
-      end
-
-      @summary ||= ''
-      @legs    ||= []
+      @summary  = attribs.fetch(:summary, '')
+      @legs     = attribs.fetch(:legs, [])
     end
 
     # TODO: calculate total route distance as the sum of all of its legs

@@ -4,18 +4,11 @@ module Directions
       :end_location, :start_address, :end_address
 
     def initialize(attribs={})
-      attribs.each do |k, v|
-        m = "#{k}=".to_sym
-        self.send(m, v) if self.respond_to?(m)
-      end
-
-      @steps           ||= []
-      @distance        ||= Directions::Distance.new
-      @duration        ||= Directions::Duration.new
-      @start_location  ||= Directions::Location.new
-      @end_location    ||= Directions::Location.new
-      @start_address   ||= ''
-      @end_address     ||= ''
+      @steps          = attribs.fetch(:steps, [])
+      @distance       = attribs.fetch(:distance, Directions::Distance.new)
+      @duration       = attribs.fetch(:duration, Directions::Duration.new)
+      @start_location = attribs.fetch(:start_location, Directions::Location.new)
+      @end_location   = attribs.fetch(:end_location, Directions::Location.new)
     end
 
     def describe
