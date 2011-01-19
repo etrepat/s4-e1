@@ -1,28 +1,33 @@
 module Directions
   class Measure
-    def initialize(value=0, text='')
+    class BadUnitsError < StandardError; end
+    
+    VALID_UNITS = %w(meters seconds)
+    
+    def initialize(value, units='meters', text='')
       @value = value
+      @units = units
+      raise BadUnitsError unless units_valid?
       @text = text
     end
 
-    attr_accessor :value, :text
+    attr_accessor :value, :units, :text
 
     # for rapid printing
     def to_s
       return text unless text.strip.empty?
-      return value.to_s if value.to_i != 0
-      'unknown'
+      "#{value} #{units}"
     end
 
     # this way we should be able to compare measures
     def eql?(measure)
-      self.class.equal?(measure.class) && @value == measure.value
+      units == measure.units && @value == measure.value
     end
 
     include Comparable
 
     def <=>(measure)
-      raise TypeError, 'Incompatible types!' unless self.class.equal?(measure.class)
+      raise TypeError, 'Incompatible types!' unless units == measure.units
       value <=> measure.value
     end
 
@@ -31,12 +36,12 @@ module Directions
     #def +(measure)
     #  raise TypeError, 'Incompatible types!' unless self.class.equal?(measure.class)
     #end
+    
+    protected
+    
+    def units_valid?
+      VALID_UNITS.include?(units.to_s)
+    end
   end
-
-  # values from duration are expressed in seconds
-  class Duration < Measure; end
-
-  # values from distance are expressed in meters
-  class Distance < Measure; end
 end
 

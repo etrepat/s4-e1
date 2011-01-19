@@ -5,8 +5,8 @@ module Directions
 
     def initialize(attribs={})
       @instructions   = attribs.fetch(:instructions, '')
-      @distance       = attribs.fetch(:distance, Directions::Distance.new)
-      @duration       = attribs.fetch(:duration, Directions::Duration.new)
+      @distance       = attribs.fetch(:distance, Directions::Measure.new(0, :meters))
+      @duration       = attribs.fetch(:duration, Directions::Measure.new(0, :seconds))
       @start_location = attribs.fetch(:start_location, Directions::Location.new)
       @end_location   = attribs.fetch(:end_location, Directions::Location.new)
     end
@@ -21,12 +21,12 @@ module Directions
       attribs[:start_location]  = data['start_location']
       attribs[:end_location]    = data['end_location']
 
-      attribs[:distance]        = Directions::Distance.new(
-        data['distance']['value'].to_i, data['distance']['text']
+      attribs[:distance]        = Directions::Measure.new(
+        data['distance']['value'].to_i, :meters, data['distance']['text']
       ) if data['distance']
 
-      attribs[:duration]        = Directions::Duration.new(
-        data['duration']['value'].to_i, data['duration']['text']
+      attribs[:duration]        = Directions::Measure.new(
+        data['duration']['value'].to_i, :seconds, data['duration']['text']
       ) if data['duration']
 
       return Directions::Step.new(attribs)
