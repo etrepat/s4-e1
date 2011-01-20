@@ -1,6 +1,6 @@
 module Directions
   class Measure
-    class BadUnitsError < StandardError; end
+    BadUnitsError = Class.new(StandardError)
 
     VALID_UNITS = %w(meters seconds)
 

@@ -1,12 +1,12 @@
 module Directions
-  class Error < ::StandardError;        end
-  class ParsingError < Error;           end
-  class InvalidRequestError < Error;    end
-  class RequestDenied < Error;          end
-  class LocationNotFoundError < Error;  end
-  class ZeroResultsError < Error;       end
-  class WaypointsExceededError < Error; end
-  class QueryLimitError < Error;        end
-  class UnknownError < Error;           end
+  Error                   = Class.new(StandardError)
+  ParsingError            = Class.new(Error)
+  InvalidRequestError     = Class.new(Error)
+  RequestDenied           = Class.new(Error)
+  LocationNotFoundError   = Class.new(Error)
+  ZeroResultsError        = Class.new(Error)
+  WaypointsExceededError  = Class.new(Error)
+  QueryLimitError         = Class.new(Error)
+  UnknownError            = Class.new(Error)
 end
 
