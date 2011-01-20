@@ -1,13 +1,13 @@
 module Directions
   class Measure
     class BadUnitsError < StandardError; end
-    
+
     VALID_UNITS = %w(meters seconds)
-    
+
     def initialize(value, units='meters', text='')
       @value = value
+      raise BadUnitsError unless VALID_UNITS.include?(units.to_s)
       @units = units
-      raise BadUnitsError unless units_valid?
       @text = text
     end
 
@@ -36,12 +36,6 @@ module Directions
     #def +(measure)
     #  raise TypeError, 'Incompatible types!' unless self.class.equal?(measure.class)
     #end
-    
-    protected
-    
-    def units_valid?
-      VALID_UNITS.include?(units.to_s)
-    end
   end
 end
 
