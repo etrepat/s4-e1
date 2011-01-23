@@ -23,6 +23,8 @@ module Directions
     def eql?(measure)
       units == measure.units && @value == measure.value
     end
+    
+    alias_method :eql?, :==
 
     include Comparable
 
@@ -30,12 +32,6 @@ module Directions
       raise TypeError, 'Incompatible types!' unless units == measure.units
       value <=> measure.value
     end
-
-    # TODO: should add operators for measures but I don't know how to automatically
-    # re-localize measures text strings as they are returned by the Directions API
-    #def +(measure)
-    #  raise TypeError, 'Incompatible types!' unless self.class.equal?(measure.class)
-    #end
   end
 end
 
