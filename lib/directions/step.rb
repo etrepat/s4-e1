@@ -17,7 +17,7 @@ module Directions
 
     def self.build_from_api_data(data)
       attribs = {}
-      attribs[:instructions]    = self.clean_instructions_markup(data['html_instructions'])
+      attribs[:instructions]    = Directions::Tools.instructions_to_ansi(data['html_instructions'])
       attribs[:start_location]  = data['start_location']
       attribs[:end_location]    = data['end_location']
 
